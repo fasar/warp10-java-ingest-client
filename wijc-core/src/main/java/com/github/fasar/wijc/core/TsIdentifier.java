@@ -23,8 +23,8 @@ public class TsIdentifier {
     public static TsIdentifier of(String className, Tuple2<String, String>... tuples) {
         HashMap<String, String> labels = new HashMap<>();
         HashMap<String, String> tags = new HashMap<>();
-        for (Tuple2 tuple : tuples) {
-            labels.put((String) tuple.getE1(), (String) tuple.getE2());
+        for (Tuple2<String, String> tuple : tuples) {
+            labels.put(tuple.getE1(), tuple.getE2());
         }
         return new TsIdentifier(className, labels, tags);
     }

@@ -8,7 +8,7 @@ public class Warp10TSConfiguration {
     public static Warp10TSConfiguration defaultConfiguration = new Warp10TSConfiguration(EngineTimeUnit.MICROSECONDS);
     EngineTimeUnit timeUnit;
 
-    public static enum EngineTimeUnit {
+    public enum EngineTimeUnit {
         SECONDS, MILLISECONDS, MICROSECONDS, NANOSECONDS
     }
 

@@ -13,8 +13,7 @@ import java.nio.charset.StandardCharsets;
 public class Warp10TsAppenderImpl extends TsAppenderAbstract implements Closeable {
 
     private final String writeToken;
-    private final Warp10TSConfiguration configuration;
-    private URL url;
+    private final URL url;
     private OutputStream outputStream;
     private Socket socket;
     private BufferedReader inputReader;
@@ -25,9 +24,8 @@ public class Warp10TsAppenderImpl extends TsAppenderAbstract implements Closeabl
         super(configuration, mapper);
         this.url = new URL(url);
         this.writeToken = writeToken;
-        this.configuration = configuration;
 
-        Thread thread = new Thread(() -> connect());
+        Thread thread = new Thread(this::connect);
         thread.start();
     }
 

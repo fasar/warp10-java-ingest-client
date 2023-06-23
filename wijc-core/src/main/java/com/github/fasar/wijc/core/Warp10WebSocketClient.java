@@ -8,21 +8,19 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeoutException;
 
 @Slf4j
 public class Warp10WebSocketClient extends WebSocketClient {
 
-    String writeToken;
-    long reconnectTime = 1000L;
+    final String writeToken;
+    final long reconnectTime = 1000L;
 
     public Warp10WebSocketClient(URI serverUri, String writeToken) {
         super(serverUri);
         this.writeToken = writeToken;
     }
 
-    public static void main(String[] args) throws URISyntaxException, InterruptedException, ExecutionException, TimeoutException {
+    public static void main(String[] args) throws URISyntaxException, InterruptedException {
         Warp10WebSocketClient client = new Warp10WebSocketClient(new URI("ws://10.0.0.10:8080/api/v0/streamupdate"), "writeTokenCI");
         client.connectBlocking();
         client.send("0// test.class{} 0\n");

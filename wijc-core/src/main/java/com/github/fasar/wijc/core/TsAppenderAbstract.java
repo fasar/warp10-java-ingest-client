@@ -12,7 +12,7 @@ import java.util.function.Function;
 public abstract class TsAppenderAbstract implements TsAppender {
 
     private final ObjectMapper mapper;
-    private Function<Long, String> mapTsToWarp10Ts;
+    private final Function<Long, String> mapTsToWarp10Ts;
 
     public TsAppenderAbstract(Warp10TSConfiguration configuration, ObjectMapper mapper) {
         this.mapper = mapper;
@@ -108,7 +108,7 @@ public abstract class TsAppenderAbstract implements TsAppender {
         }
     }
 
-    private <T> String mapValueToStr(double value) {
+    private String mapValueToStr(double value) {
         if (Double.isFinite(value)) {
             String valueStr = String.valueOf(value);
             if (!valueStr.contains(".")) {

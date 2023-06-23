@@ -22,9 +22,9 @@ public class Warp10TsAppenderSimplImpl implements TsAppender {
 
     private final ObjectMapper mapper;
     private final String writeToken;
-    private URL url;
-    private boolean socketCantOpenAlreadyLogged = false;
-    private Function<Long, String> mapTsToWarp10Ts;
+    private final URL url;
+    private final boolean socketCantOpenAlreadyLogged = false;
+    private final Function<Long, String> mapTsToWarp10Ts;
 
 
     public Warp10TsAppenderSimplImpl(String url, String writeToken, Warp10TSConfiguration configuration, ObjectMapper mapper) throws MalformedURLException {
@@ -101,7 +101,7 @@ public class Warp10TsAppenderSimplImpl implements TsAppender {
         }
     }
 
-    private <T> String mapValueToStr(double value) {
+    private String mapValueToStr(double value) {
         if (Double.isFinite(value)) {
             String valueStr = String.valueOf(value);
             if (!valueStr.contains(".")) {
@@ -140,7 +140,7 @@ public class Warp10TsAppenderSimplImpl implements TsAppender {
         }
     }
 
-    private <T> String convertToWarp10Line(TsIdentifier id, long ts, String value) {
+    private String convertToWarp10Line(TsIdentifier id, long ts, String value) {
         StringBuilder sb = new StringBuilder();
         sb.append(mapTsToWarp10Ts.apply(ts));
         sb.append("// ");
@@ -162,7 +162,7 @@ public class Warp10TsAppenderSimplImpl implements TsAppender {
         return sb.toString();
     }
 
-    private void appendObject(String data) throws InterruptedException, IOException {
+    private void appendObject(String data) throws IOException {
         // Open the connection
         String host = url.getHost();
         int port = url.getPort() == -1 ? 8080 : url.getPort();
@@ -174,7 +174,7 @@ public class Warp10TsAppenderSimplImpl implements TsAppender {
         http.setRequestProperty("Content-Type", "text/plain");
         // Get the output stream
         try (
-                OutputStream outputStream = http.getOutputStream();
+                OutputStream outputStream = http.getOutputStream()
         ) {
             // Write the data
             outputStream.write(data.getBytes(StandardCharsets.UTF_8));
